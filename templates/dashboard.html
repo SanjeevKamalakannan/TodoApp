@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <h1>Dashboard <small> Welcome {{session.username}} </small></h1>
+  <!-- <h5> Welcome {{session.privatekey}}</h5>
+  <h5> Welcome {{session.publickey}}</h5> -->
+  <a class="btn btn-success px-3" href="/addtodo"> Add Todo</a>
+  <hr>
+  <table class="table table-striped">
+    <tr>
+      <th>Todo ID</th>
+      <th>Task</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+    {% for todo in todos %}
+      <tr>
+        <td>{{todo.todoid}}</td>
+        <td>{{todo.todo}}</td>
+        <td><a href="edit_todo/{{todo.todoid}}" class="btn btn-default pull-right">Edit</a></td>
+        <td>
+          <form action="{{url_for('delete_todo', id=todo.todoid)}}" method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="submit" value="Delete" class="btn btn-danger">
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
